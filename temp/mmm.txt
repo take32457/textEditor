@@ -1,0 +1,42 @@
+import java.util.*;
+
+class Solution{    public static String winnerPairOfCards(String[] player1, String[] player2){
+        HashMap<String,Integer> player1Hand = setPlayerHands(player1);
+        HashMap<String,Integer> player2Hand = setPlayerHands(player2);
+        if(returnDuplicate(player1Hand) > returnDuplicate(player2Hand)) return "player1";
+        else if(returnDuplicate(player1Hand) < returnDuplicate(player2Hand)) return "player2";
+        
+    }
+    public static String winnerpairOfCards()
+
+    public static int returnDuplicate(HashMap<String,Integer> hashmap){
+        int i = 0;
+        for(Integer s : hashmap.values()){
+            if(i < s) i = s;
+        }
+        return i;
+    }
+
+    public static HashMap<String,Integer> setPlayerHands(String[] player){
+        HashMap<String,Integer> playerHand = new HashMap<>();
+        for(int i=0;i<player.length;i++){
+            if(playerHand.get(player[i].substring(1))==null) playerHand.put(player[i].substring(1),1);
+            else playerHand.replace(player[i].substring(1),playerHand.get(player[i].substring(1))+1);
+        }
+        return playerHand;
+    }
+
+    public static int returnValue(String s){
+        HashMap<String,Integer> value = new HashMap<>(){
+            {
+                put("A",13);
+                put("K",12);
+                put("Q",11);
+                put("J",10);
+            }
+        };
+        if(value.get(s)!=null) return value.get(s);
+        int i = Integer.parseInt(s);
+        return i - 1;
+    }
+}
