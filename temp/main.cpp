@@ -220,15 +220,20 @@ void commandMode()
 }
 int saveToFile(const char* fileName) 
 {
-	FILE* fp = fopen(fileName, "w");
-	if (fp == NULL)return 1;
-	E_ROW* temp = E.prow->next;
-	while (temp->next != NULL) {
-		if (temp->next->next == NULL)temp->pChars[strlen(temp->pChars) - 1] = 0;
-		fputs(temp->pChars, fp);
-		temp = temp->next;
+	FILE* fp = fopen(fileName, "r+");
+	if (fp == NULL) {
+		fp = fopen(fileName, "w");
+		fclose(fp);
 	}
-	fclose(fp);
+	else {
+		E_ROW* temp = E.prow->next;
+		while (temp->next != NULL) {
+			if (temp->next->next == NULL)temp->pChars[strlen(temp->pChars) - 1] = 0;
+			fputs(temp->pChars, fp);
+			temp = temp->next;
+		}
+		fclose(fp);
+	}
 	return 0;
 }
 int loadFromFile(const char* fileName)
